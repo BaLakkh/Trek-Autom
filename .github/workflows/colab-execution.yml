@@ -1,27 +1,33 @@
-name: Execute Google Colab Notebook
+name: Update Map
 
 on:
   schedule:
-    # Exécution toutes les 6 heures
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *'  # Exécuter toutes les heures
+  workflow_dispatch:  # Permet de déclencher manuellement
 
 jobs:
-  run-colab:
+  update-map:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run Google Colab notebook
-      uses: marktani/run-colab@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        notebook: './path_to_your_notebook.ipynb'  # Chemin vers ton notebook
-        token: ${{ secrets.GITHUB_TOKEN }}  # Ton token pour authentification
+        python-version: '3.x'
 
-    - name: Save result
+    - name: Install dependencies
       run: |
-        git add .
-        git commit -m "Update Colab results"
-        git push
+        pip install gspread oauth2client folium
+
+    - name: Run script
+      run: |
+        python generate_map.py
+
+    - name: Deploy map to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./  # Publier la carte directement
