@@ -24,6 +24,7 @@ else:
 
 # Extraire les données
 rows = data.get('values', [])
+print(rows)
 
 
 # Créer la carte
