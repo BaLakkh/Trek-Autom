@@ -30,11 +30,9 @@ rows = data.get('values', [])
 m = folium.Map(location=[42.5, 1.5], zoom_start=10)
 
 # Ajouter des marqueurs à la carte pour chaque entrée
+# Ajouter des marqueurs pour chaque point
 for row in rows:
-    latitude = float(row['gsx$latitude']['$t'])
-    longitude = float(row['gsx$longitude']['$t'])
-    timestamp = row['gsx$timestamp']['$t']
-    folium.Marker(location=[latitude, longitude], popup=timestamp).add_to(m)
+    folium.Marker(location=[row['Latitude'], row['Longitude']], popup=row['Timestamp']).add_to(m)
 
 # Sauvegarder la carte
 m.save('carte.html')
