@@ -2,7 +2,7 @@ name: Update Map
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Exécuter toutes les heures
+  - cron: '0 8,11,14,17,20 * * *'
   workflow_dispatch:  # Permet de déclencher manuellement
 
 jobs:
