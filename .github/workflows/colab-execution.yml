@@ -1,0 +1,27 @@
+name: Execute Google Colab Notebook
+
+on:
+  schedule:
+    # Exécution toutes les 6 heures
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-colab:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run Google Colab notebook
+      uses: marktani/run-colab@v1
+      with:
+        notebook: './path_to_your_notebook.ipynb'  # Chemin vers ton notebook
+        token: ${{ secrets.GITHUB_TOKEN }}  # Ton token pour authentification
+
+    - name: Save result
+      run: |
+        git add .
+        git commit -m "Update Colab results"
+        git push
