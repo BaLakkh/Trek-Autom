@@ -2,8 +2,7 @@ import requests
 import folium
 
 # Remplacez YOUR_SHEET_ID par l'ID de votre Google Sheet
-url = 'https://spreadsheets.google.com/feeds/list/1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c/od6/public/values?alt=json'
-
+url = 'https://sheets.googleapis.com/v4/spreadsheets/1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c/values/Sheet1?key=AIzaSyBHlI-BiN0I1ZgpGFsiEKHNX3rx8AjTKcY'
 # Faire une requête HTTP pour récupérer les données
 response = requests.get(url)
 
