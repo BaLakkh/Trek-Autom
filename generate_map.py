@@ -2,7 +2,7 @@ import requests
 import folium
 
 spreadsheet_id = '1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c'
-range_name = 'Lat_Lon'  # Plage spécifique
+range_name = 'Lat_Lon!A1:C1000'  # Plage spécifique
 api_key = 'AIzaSyBHlI-BiN0I1ZgpGFsiEKHNX3rx8AjTKcY'
 
 # Construisez l'URL
