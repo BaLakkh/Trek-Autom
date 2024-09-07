@@ -15,13 +15,8 @@ response = requests.get(url)
 
 # Vérifier si la requête a réussi (code 200)
 if response.status_code == 200:
-    print("Requête réussie!")
-    print("Contenu de la réponse :")
-    print(response.text)  # Afficher le contenu brut de la réponse
     try:
         data = response.json()  # Tenter de lire le JSON
-        print("Données JSON :")
-        print(data)
     except ValueError as e:
         print("Erreur lors de la conversion en JSON:", e)
 else:
