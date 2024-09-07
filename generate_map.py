@@ -1,8 +1,13 @@
 import requests
 import folium
 
-# Remplacez YOUR_SHEET_ID par l'ID de votre Google Sheet
-url = 'https://sheets.googleapis.com/v4/spreadsheets/1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c/values/Sheet1?key=AIzaSyBHlI-BiN0I1ZgpGFsiEKHNX3rx8AjTKcY'
+spreadsheet_id = '1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c'
+range_name = 'Sheet1!A1:C1000'  # Plage spécifique
+api_key = 'AIzaSyBHlI-BiN0I1ZgpGFsiEKHNX3rx8AjTKcY'
+
+# Construisez l'URL
+url = f'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}/values/{range_name}?key={api_key}'
+
 # Faire une requête HTTP pour récupérer les données
 response = requests.get(url)
 
