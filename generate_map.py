@@ -1,24 +1,25 @@
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+import requests
 import folium
 
-# Charger les informations d'identification
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name('autom-gr10-556ec077cf0d.json', scope)
-client = gspread.authorize(creds)
+# Remplacez YOUR_SHEET_ID par l'ID de votre Google Sheet
+url = 'https://spreadsheets.google.com/feeds/list/1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c/od6/public/values?alt=json'
 
-# Accéder à la feuille Google Sheets
-sheet = client.open("LATLON GR10").sheet1
+# Faire une requête HTTP pour récupérer les données
+response = requests.get(url)
+data = response.json()
 
-# Récupérer toutes les données
-rows = sheet.get_all_records()
+# Extraire les données
+rows = data['feed']['entry']
 
-# Générer la carte
+# Créer la carte
 m = folium.Map(location=[42.5, 1.5], zoom_start=10)
 
-# Ajouter des marqueurs pour chaque point
+# Ajouter des marqueurs à la carte pour chaque entrée
 for row in rows:
-    folium.Marker(location=[row['Latitude'], row['Longitude']], popup=row['Timestamp']).add_to(m)
+    latitude = float(row['gsx$latitude']['$t'])
+    longitude = float(row['gsx$longitude']['$t'])
+    timestamp = row['gsx$timestamp']['$t']
+    folium.Marker(location=[latitude, longitude], popup=timestamp).add_to(m)
 
-# Sauvegarder la carte dans un fichier HTML
+# Sauvegarder la carte
 m.save('carte.html')
