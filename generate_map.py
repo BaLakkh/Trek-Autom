@@ -28,7 +28,8 @@ else:
     print(f"Erreur HTTP {response.status_code}: {response.reason}")
 
 # Extraire les données
-rows = data['feed']['entry']
+rows = data.get('values', [])
+
 
 # Créer la carte
 m = folium.Map(location=[42.5, 1.5], zoom_start=10)
