@@ -32,7 +32,7 @@ m = folium.Map(location=[42.5, 1.5], zoom_start=10)
 # Ajouter des marqueurs à la carte pour chaque entrée
 # Ajouter des marqueurs pour chaque point
 for row in rows:
-    folium.Marker(location=[row['Latitude'], row['Longitude']], popup=row['Timestamp']).add_to(m)
+    folium.Marker(location=[row[1], row[2]], popup=row[0]).add_to(m)
 
 # Sauvegarder la carte
 m.save('carte.html')
