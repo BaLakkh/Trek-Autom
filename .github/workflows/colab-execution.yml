@@ -20,8 +20,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install gspread oauth2client folium
-
+        pip install gspread oauth2client folium pytz
+        
     - name: Run script
       run: |
         python generate_map.py
