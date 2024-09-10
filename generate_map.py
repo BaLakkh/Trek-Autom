@@ -1,5 +1,6 @@
 import requests
 import folium
+from datetime import datetime
 
 spreadsheet_id = '1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c'
 range_name = 'Lat_Lon!A1:C1000'
@@ -19,7 +20,9 @@ else:
     print(f"Erreur HTTP {response.status_code}: {response.reason}")
 
 rows = data.get('values', [])
-print(rows)
+
+# Obtenir l'heure actuelle
+current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # Créer la carte
 m = folium.Map(location=[42.688679, 0.842970], zoom_start=8.4)
@@ -27,6 +30,18 @@ m = folium.Map(location=[42.688679, 0.842970], zoom_start=8.4)
 # Ajouter des marqueurs pour chaque point de votre Google Sheets
 for row in rows[1:]:
     folium.Marker(location=[float(row[1]), float(row[2])], popup=row[0]).add_to(m)
+
+# Ajouter l'heure de génération en tant que Custom Control
+title_html = f'''
+    <div style="position: fixed; 
+                bottom: 50px; left: 50px; width: 300px; height: 40px; 
+                background-color: white; z-index:9999;
+                font-size:14px; border:2px solid grey; padding: 10px;">
+        Carte générée à : {current_time}
+    </div>
+    '''
+
+m.get_root().html.add_child(folium.Element(title_html))
 
 # Charger le fichier GeoJSON du GR10
 geojson_file = 'gr10.geojson'  # Remplacez par le chemin de votre fichier GeoJSON
