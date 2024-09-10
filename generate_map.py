@@ -28,7 +28,7 @@ print(rows)
 
 
 # Créer la carte
-m = folium.Map(location=[42.5, 1.5], zoom_start=10)
+m = folium.Map(location=[42.688679, 0.842970], zoom_start=8.4)
 
 # Ajouter des marqueurs à la carte pour chaque entrée
 # Ajouter des marqueurs pour chaque point
