@@ -2,38 +2,40 @@ import requests
 import folium
 
 spreadsheet_id = '1KLmYkv_-xfwzWcDT0AximnUGAn7E5u_NSltj77GLa2c'
-range_name = 'Lat_Lon!A1:C1000'  # Plage spécifique
+range_name = 'Lat_Lon!A1:C1000'
 api_key = 'AIzaSyBHlI-BiN0I1ZgpGFsiEKHNX3rx8AjTKcY'
 
-# Construisez l'URL
+# Construisez l'URL pour récupérer les données depuis Google Sheets
 url = f'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}/values/{range_name}?key={api_key}'
 
-# Faire une requête HTTP pour récupérer les données
 response = requests.get(url)
 
-response = requests.get(url)
-
-# Vérifier si la requête a réussi (code 200)
 if response.status_code == 200:
     try:
-        data = response.json()  # Tenter de lire le JSON
+        data = response.json()
     except ValueError as e:
         print("Erreur lors de la conversion en JSON:", e)
 else:
     print(f"Erreur HTTP {response.status_code}: {response.reason}")
 
-# Extraire les données
 rows = data.get('values', [])
 print(rows)
-
 
 # Créer la carte
 m = folium.Map(location=[42.688679, 0.842970], zoom_start=8.4)
 
-# Ajouter des marqueurs à la carte pour chaque entrée
-# Ajouter des marqueurs pour chaque point
+# Ajouter des marqueurs pour chaque point de votre Google Sheets
 for row in rows[1:]:
-    folium.Marker(location=[row[1], row[2]], popup=row[0]).add_to(m)
+    folium.Marker(location=[float(row[1]), float(row[2])], popup=row[0]).add_to(m)
+
+# Charger le fichier GeoJSON du GR10
+geojson_file = 'gr10.geojson'  # Remplacez par le chemin de votre fichier GeoJSON
+
+# Ajouter le tracé du GR10 depuis le fichier GeoJSON
+folium.GeoJson(geojson_file, name="GR10").add_to(m)
+
+# Ajouter un contrôle de couches
+folium.LayerControl().add_to(m)
 
 # Sauvegarder la carte
 m.save('carte.html')
