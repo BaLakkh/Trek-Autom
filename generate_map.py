@@ -27,7 +27,7 @@ paris_tz = pytz.timezone('Europe/Paris')
 current_time = datetime.now(paris_tz).strftime('%Y-%m-%d %H:%M:%S')
 
 # Créer la carte
-m = folium.Map(location=[42.688679, 0.842970], zoom_start=8.4)
+m = folium.Map(location=[56.819817, -5.105218], zoom_start=8.4)
 
 # Ajouter des marqueurs pour chaque point de votre Google Sheets
 for row in rows[1:]:
@@ -46,10 +46,11 @@ title_html = f'''
 m.get_root().html.add_child(folium.Element(title_html))
 
 # Charger le fichier GeoJSON du GR10
-geojson_file = 'gr10.geojson'  # Remplacez par le chemin de votre fichier GeoJSON
+geojson_file_west_highland_way = 'west_highland_way.geojson'  # Remplacez par le chemin de votre fichier GeoJSON
+geogson_file_skye = 'skye_trail__scotland_.geojson'
 
-# Ajouter le tracé du GR10 depuis le fichier GeoJSON
-folium.GeoJson(geojson_file, name="GR10").add_to(m)
+folium.GeoJson(geojson_file_west_highland_way, name="West Highland Way").add_to(m)
+folium.GeoJson(geojson_file_west_highland_way, name="Skye Trail").add_to(m)
 
 # Ajouter un contrôle de couches
 folium.LayerControl().add_to(m)
