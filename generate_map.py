@@ -50,7 +50,7 @@ geojson_file_west_highland_way = 'west_highland_way.geojson'  # Remplacez par le
 geogson_file_skye = 'skye_trail__scotland_.geojson'
 
 folium.GeoJson(geojson_file_west_highland_way, name="West Highland Way").add_to(m)
-folium.GeoJson(geojson_file_west_highland_way, name="Skye Trail").add_to(m)
+folium.GeoJson(geojson_file_skye, name="Skye Trail").add_to(m)
 
 # Ajouter un contrôle de couches
 folium.LayerControl().add_to(m)
